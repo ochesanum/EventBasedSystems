@@ -4,12 +4,15 @@ import org.apache.storm.spout.SpoutOutputCollector;
 import org.apache.storm.task.TopologyContext;
 import org.apache.storm.topology.OutputFieldsDeclarer;
 import org.apache.storm.topology.base.BaseRichSpout;
+import org.apache.storm.tuple.Fields;
 import org.apache.storm.tuple.Values;
 import org.apache.storm.utils.Utils;
+import tema1.pubsub.models.Subscription;
+import tema1.pubsub.models.SubscriptionEntry;
 
 import java.util.*;
 
-import static tema1.pubsub.Constants.*;
+import static tema1.pubsub.utils.Constants.*;
 
 public class SubscriptionSpout extends BaseRichSpout {
     private final int totalSubscriptions;
@@ -36,7 +39,7 @@ public class SubscriptionSpout extends BaseRichSpout {
         }
 
         this.subscriptions = new ArrayList<>();
-
+        generateSubscriptionEntries();
     }
 
     // stationid, city, temp, rain, wind, direction, date
@@ -193,7 +196,7 @@ public class SubscriptionSpout extends BaseRichSpout {
 
     @Override
     public void declareOutputFields(OutputFieldsDeclarer outputFieldsDeclarer) {
-
+        outputFieldsDeclarer.declare(new Fields("subscription"));
     }
     public static void main(String[] args) {
         SubscriptionSpout subscriptionSpout = new SubscriptionSpout(1000,new HashMap<String,Float>(){{

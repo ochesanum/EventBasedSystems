@@ -7,12 +7,10 @@ import org.apache.storm.topology.base.BaseRichSpout;
 import org.apache.storm.tuple.Fields;
 import org.apache.storm.tuple.Values;
 import org.apache.storm.utils.Utils;
+import tema1.pubsub.models.Publication;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.function.BiFunction;
-
-import static tema1.pubsub.Constants.*;
 
 public class PublicationSpout extends BaseRichSpout {
     private SpoutOutputCollector collector;
@@ -44,8 +42,8 @@ public class PublicationSpout extends BaseRichSpout {
             int wind = this.random.nextInt(100);
             String direction = this.directions.get(this.random.nextInt(this.directions.size()));
             String date = new SimpleDateFormat("dd.MM.yyyy").format(new Date());
-
-            Values values = new Values(stationId, city, temp, rain, wind, direction, date);
+            Publication publication = new Publication(stationId,city,temp,rain,wind,direction,date);
+            Values values = new Values(publication);
             this.collector.emit(values);
 
             this.currentPublication++;
@@ -56,6 +54,6 @@ public class PublicationSpout extends BaseRichSpout {
 
     @Override
     public void declareOutputFields(OutputFieldsDeclarer outputFieldsDeclarer) {
-        outputFieldsDeclarer.declare(new Fields(STATION_ID, CITY, TEMPERATURE, RAIN, WIND, DIRECTION, DATE));
+        outputFieldsDeclarer.declare(new Fields("publication"));
     }
 }

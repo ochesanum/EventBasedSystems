@@ -1,6 +1,3 @@
 <Loggers>
-    <Logger name="org.apache.storm" level="WARN"/>
-    <Root level="OFF">
-        <AppenderRef ref="Console"/>
-    </Root>
+
 </Loggers>
