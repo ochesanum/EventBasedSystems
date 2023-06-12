@@ -24,7 +24,7 @@ public class SubscriptionSpout extends BaseRichSpout {
     private int subscriptionIndex;
 
     private final List<String> stationIds = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
-    private final List<String> dates = Arrays.asList("01.04.2023", "02.04.2023", "03.04.2023", "04.04.2023");
+    private final List<String> dates = Arrays.asList("05.06.2023","12.06.2023","13.06.2023","14.06.2023");
     private final List<String> cities = Arrays.asList("Iasi", "Bucuresti", "Vaslui", "Suceava", "Todirel", "下北沢");
     private final List<String> directions = Arrays.asList("N", "NE", "E", "SE", "S", "SW", "W", "NW");
 
@@ -199,7 +199,7 @@ public class SubscriptionSpout extends BaseRichSpout {
         outputFieldsDeclarer.declare(new Fields("subscription"));
     }
     public static void main(String[] args) {
-        SubscriptionSpout subscriptionSpout = new SubscriptionSpout(1000,new HashMap<String,Float>(){{
+        SubscriptionSpout subscriptionSpout = new SubscriptionSpout(10,new HashMap<String,Float>(){{
             put(STATION_ID, 0.92f);
             put(CITY, 0.1f);
             put(TEMPERATURE, 0.23f);
@@ -209,7 +209,7 @@ public class SubscriptionSpout extends BaseRichSpout {
             put(DATE, 0.4f);
         }});
 
-        System.out.println(subscriptionSpout.generateSubscriptionEntries());
+        System.out.println(subscriptionSpout.subscriptions);
         System.out.println(subscriptionSpout.subscriptions.size());
         Map<String, Integer> freq = new HashMap<>();
         for(Subscription subscription : subscriptionSpout.subscriptions) {

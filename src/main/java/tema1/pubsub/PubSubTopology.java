@@ -17,7 +17,7 @@ public class PubSubTopology {
     public static void main(String[] args) throws InterruptedException {
         Instant inst1 = Instant.now();
         TopologyBuilder builder = new TopologyBuilder();
-        builder.setSpout("sub-spout", new SubscriptionSpout(10000,new HashMap<String,Float>(){{
+        builder.setSpout("sub-spout", new SubscriptionSpout(1000,new HashMap<String,Float>(){{
             put(STATION_ID, 0.92f);
             put(CITY, 0.1f);
             put(TEMPERATURE, 0.23f);
@@ -25,8 +25,8 @@ public class PubSubTopology {
             put(WIND, 0.12f);
             put(DIRECTION, 0.4426f);
             put(DATE, 0.4f);
-        }}),5).setNumTasks(1000);
-        builder.setSpout("pub-spout", new PublicationSpout(10000),5).setNumTasks(1000);
+        }}));
+        builder.setSpout("pub-spout", new PublicationSpout(1000));
         builder.setBolt("pubsub-bolt", new PubSubBolt(),5).allGrouping("sub-spout").allGrouping("pub-spout").setNumTasks(1);
 
         Config config = new Config();
